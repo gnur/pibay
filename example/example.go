@@ -1,12 +1,16 @@
 package main
 
-import ( 
-    "github.com/gnur/gopiratebay"
+import (
 	"fmt"
-    )
+	"github.com/gnur/gopiratebay"
+)
 
 func main() {
-    _, torrents := gopiratebay.Search("go lang piratebay")
+	err, torrents := gopiratebay.Search("go lang piratebay")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	for _, tor := range torrents {
 		fmt.Println(tor.Magnetlink)
 		fmt.Println(tor.Title)

@@ -4,8 +4,8 @@ import (
 	"code.google.com/p/go.net/html"
 	"net/http"
 	"net/url"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 type Torrent struct {
@@ -75,7 +75,7 @@ func getTorrent(n *html.Node, t *Torrent) error {
 		for _, a := range n.Attr {
 			if n.Data == "a" && a.Key == "href" && a.Val[:6] == "magnet" {
 				t.Magnetlink = a.Val
-			} else if n.Data == "a" &&  a.Key == "href" && a.Val[:9] == "/torrent/" {
+			} else if n.Data == "a" && a.Key == "href" && a.Val[:9] == "/torrent/" {
 				if t.Title == "" {
 					t.Title = getNodeText(n)
 				}
@@ -108,11 +108,11 @@ func sizeStrToInt(s string) int {
 	multiply = 1
 	ext := s[len(s)-3:]
 	if ext == "MiB" {
-		multiply = 1024*1024
+		multiply = 1024 * 1024
 	} else if ext == "KiB" {
 		multiply = 1024
 	} else if ext == "GiB" {
-		multiply = 1024*1024*1024
+		multiply = 1024 * 1024 * 1024
 	}
 	size, err := strconv.ParseFloat(s[:len(s)-5], 64)
 	if err != nil {

@@ -1,5 +1,4 @@
 Bugs:
--Example.go does not handle errors
 -Tests don't check for errors
 -Search only shows torrents from first page of results
 

@@ -1,0 +1,10 @@
+Bugs:
+-Example.go does not handle errors
+-Tests don't check for errors
+-Search only shows torrents from first page of results
+
+Features:
+-Add function that returns a channel with torrents to allow parallel searches
+-Better comments
+-Use torrent info page from piratebay for details in stead of generic search page
+-

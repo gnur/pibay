@@ -1,4 +1,4 @@
-package gopiratebay
+package pibay
 
 import (
 	"testing"

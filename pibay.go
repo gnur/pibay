@@ -1,4 +1,4 @@
-package gopiratebay
+package pibay
 
 import (
 	"code.google.com/p/go.net/html"
@@ -21,19 +21,29 @@ type Torrent struct {
 	CategoryId int
 }
 
-func Search(q string) (error, []Torrent) {
+func SearchChannel(q string, c chan Torrent, done chan bool) {
 	resp, err := http.Get("http://thepiratebay.se/search/" + url.QueryEscape(q) + "/0/99/0")
 	if err != nil {
-		return err, nil
+		done <- true
+		return
 	}
 	doc, err := html.Parse(resp.Body)
 	if err != nil {
-		return err, nil
+		done <- true
+		return
 	}
+	loopdom(doc,c)
+	done <- true
+}
+
+
+func Search(q string) (error, []Torrent) {
+	ready := make(chan bool)
 	torrentsChannel := make(chan Torrent)
 	result := make(chan []Torrent)
 	go torrentReceiver(torrentsChannel, result)
-	loopdom(doc, torrentsChannel)
+	go SearchChannel(q, torrentsChannel, ready)
+	<- ready
 	close(torrentsChannel)
 	torrents := <-result
 	return nil, torrents
